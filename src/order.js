@@ -3,6 +3,15 @@ export function subtotal(lines) {
   return lines.reduce((sum, l) => sum + l.unitCents * l.qty, 0);
 }
 
+export function itemCount(lines) {
+  return lines.reduce((count, l) => {
+    if (!Number.isInteger(l.qty) || l.qty <= 0) {
+      throw new TypeError("qty must be a positive whole number");
+    }
+    return count + l.qty;
+  }, 0);
+}
+
 export function formatCents(cents) {
   if (!Number.isInteger(cents)) throw new TypeError("cents must be an integer");
   const sign = cents < 0 ? "-" : "";
